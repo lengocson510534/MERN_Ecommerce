@@ -15,8 +15,10 @@ const fn = async (product) => {
     category: product?.category[1],
     quantity: Math.round(Math.random() * 1000),
     sold: Math.round(Math.random() * 100),
+    thumb: product?.thumb,
     images: product?.images,
-    color: product?.variants?.find(el => el.label === 'Color')?.variants[0]
+    color: product?.variants?.find(el => el.label === 'Color')?.variants[0],
+    totalRatings: Math.round(Math.random() * 5)
   })
 }
 
@@ -32,13 +34,13 @@ const insertProduct = asyncHandler(async (req, res) => {
 const fn2 = async (cate) => {
   await ProductCategory.create({
     title: cate?.cate,
-    brand: cate?.brand
+    brand: cate?.brand,
+    image: cate?.image
   })
 }
 
 const insertCategory = asyncHandler(async (req, res) => {
   const promises = []
-  console.log(categoryData)
   for (let cate of categoryData) promises.push(fn2(cate))
   await Promise.all(promises)
 
